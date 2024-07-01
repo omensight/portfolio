@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:portfolio/generated/codegen_keys.g.dart';
+import 'package:portfolio/generated/codegen_loader.g.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const List<ProjectData> projects = [
@@ -14,6 +14,26 @@ const List<ProjectData> projects = [
       'assets/screenshots/no_click_ss_02.png',
     ],
     url: 'https://github.com/omensight/no_click_releases',
+  ),
+  ProjectData(
+    projectName: 'Etech',
+    projectDescription: LocaleKeys.etechProjectDescription,
+    imageFiles: [
+      'assets/screenshots/etech_00.png',
+      'assets/screenshots/etech_01.png',
+      'assets/screenshots/etech_02.png',
+      'assets/screenshots/etech_03.png',
+      'assets/screenshots/etech_04.png',
+      'assets/screenshots/etech_05.png',
+      'assets/screenshots/etech_06.png',
+      'assets/screenshots/etech_07.png',
+      'assets/screenshots/etech_08.png',
+      'assets/screenshots/etech_09.png',
+      'assets/screenshots/etech_10.png',
+      'assets/screenshots/etech_11.png',
+      'assets/screenshots/etech_12.png',
+    ],
+    url: '',
   ),
 ];
 
@@ -37,7 +57,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
         builder: (context) {
           final project = projects[widget.selectedProjectIndex];
           final imageFiles = project.imageFiles;
-          const double spacing = 32;
+          const double spacing = 8;
           return Padding(
             padding: const EdgeInsets.all(32),
             child: Column(
@@ -50,13 +70,16 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                       project.projectName,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
-                    IconButton(
-                      onPressed: () {
-                        final url = Uri.parse(project.url);
-                        launchUrl(url);
-                      },
-                      icon: SvgPicture.asset(
-                          'assets/vectors/github-mark-white.svg'),
+                    Visibility(
+                      visible: project.url.isNotEmpty,
+                      child: IconButton(
+                        onPressed: () {
+                          final url = Uri.parse(project.url);
+                          launchUrl(url);
+                        },
+                        icon: SvgPicture.asset(
+                            'assets/vectors/github-mark-white.svg'),
+                      ),
                     )
                   ],
                 ),
@@ -67,37 +90,49 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 ),
                 const SizedBox(height: spacing),
                 Expanded(
-                    child:
-                        Image.asset(project.imageFiles[_selectedImageIndex])),
-                const SizedBox(height: spacing),
-                SizedBox(
-                    height: 180,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: imageFiles
-                          .map((e) => Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: InkWell(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(4)),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(4),
-                                      child: Image.asset(
-                                        e,
-                                      ),
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    setState(() {
-                                      _selectedImageIndex =
-                                          imageFiles.indexOf(e);
-                                    });
-                                  },
-                                ),
-                              ))
-                          .toList(),
-                    )),
+                  child: Row(
+                    children: [
+                      Expanded(
+                          child: Image.asset(
+                              project.imageFiles[_selectedImageIndex])),
+                      const SizedBox(width: spacing),
+                      LayoutBuilder(builder: (context, constraints) {
+                        return SizedBox(
+                            width: 180,
+                            height: constraints.maxHeight,
+                            child: ListView(
+                              shrinkWrap: true,
+                              children: imageFiles
+                                  .map((e) => Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 8.0),
+                                        child: InkWell(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(4)),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(4),
+                                              child: Image.asset(
+                                                e,
+                                              ),
+                                            ),
+                                          ),
+                                          onTap: () {
+                                            setState(() {
+                                              _selectedImageIndex =
+                                                  imageFiles.indexOf(e);
+                                            });
+                                          },
+                                        ),
+                                      ))
+                                  .toList(),
+                            ));
+                      }),
+                    ],
+                  ),
+                ),
               ],
             ),
           );

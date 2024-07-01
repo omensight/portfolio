@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:portfolio/generated/codegen_keys.g.dart';
+import 'package:portfolio/generated/codegen_loader.g.dart';
 import 'package:portfolio/routes.dart';
 
 class HomeScreen extends StatelessWidget {

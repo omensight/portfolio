@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:portfolio/generated/codegen_keys.g.dart';
+import 'package:portfolio/generated/codegen_loader.g.dart';
 import 'package:portfolio/routes.dart';
 import 'package:portfolio/screens/projects_screen/projects_screen.dart';
 
@@ -27,8 +27,11 @@ class ProjectListScreen extends StatelessWidget {
               child: GridView.count(
                 childAspectRatio: 16 / 9,
                 crossAxisCount: 3,
+                mainAxisSpacing: 8,
                 children: projects
                     .map((e) => Container(
+                          margin:
+                              EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8)),
                           child: Stack(
